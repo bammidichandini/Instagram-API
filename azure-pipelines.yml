@@ -10,6 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'  # Using Ubuntu agent
 
 variables:
+  # Repository information
+  repoURL: 'https://github.com/bammidichandini/Instagram-API-Pord'  # CHANGE THIS to your repo URL
   sourceRef: 'refs/heads/main'  # Change to your source branch
   targetRef: 'refs/heads/main'  # Change to your target branch (e.g., main)
   system.debug: true  # Enable debug logging
@@ -26,10 +28,17 @@ steps:
     git config --global user.name "Azure Pipeline"
   displayName: 'Setup Git Identity'
 
-# Step 3: Fetch all branches to ensure we have the latest
+# Step 3: Ensure we're working with the correct remote repository
 - script: |
+    # Verify current remote
+    git remote -v
+    
+    # Update or add the remote if needed
+    git remote set-url origin $(repoURL) || git remote add origin $(repoURL)
+    
+    # Fetch all branches from the correct repository
     git fetch --all
-  displayName: 'Fetch all branches'
+  displayName: 'Configure and fetch from repository'
 
 # Step 4: Create a local branch tracking the target branch
 - script: |
@@ -41,8 +50,7 @@ steps:
     git merge $(sourceRef) --no-ff -m "Automated merge from $(sourceRef) to $(targetRef) via Azure DevOps Pipeline"
   displayName: 'Merge source into target'
   
-# Step 6: Handle potential merge conflicts (optional)
-# Note: This is a simple approach. For complex projects, you might need a more sophisticated conflict resolution strategy
+# Step 6: Handle potential merge conflicts
 - script: |
     if [ -n "$(git diff --name-only --diff-filter=U)" ]; then
       echo "Merge conflicts detected. Attempting auto-resolution by taking source branch changes."
@@ -51,9 +59,13 @@ steps:
       git commit -m "Resolved merge conflicts by taking source branch changes"
     fi
   displayName: 'Handle potential merge conflicts'
-  continueOnError: true  # Continue even if this step fails
+  continueOnError: true
 
-# Step 7: Push changes to the target branch
+# Step 7: Push changes to the target branch with authentication
 - script: |
+    # For GitHub using PAT
+    git remote set-url origin https://x-access-token:$(GIT_PAT)@github.com/your-username/your-repo.git
+    
+    # Push to the target branch
     git push origin target-local:$(targetRef)
   displayName: 'Push changes to target branch'
