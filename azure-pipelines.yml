@@ -39,33 +39,3 @@ steps:
     # Fetch all branches from the correct repository
     git fetch --all
   displayName: 'Configure and fetch from repository'
-
-# Step 4: Create a local branch tracking the target branch
-- script: |
-    git checkout -b target-local $(targetRef)
-  displayName: 'Create local target branch'
-
-# Step 5: Merge the source branch into the target branch
-- script: |
-    git merge $(sourceRef) --no-ff -m "Automated merge from $(sourceRef) to $(targetRef) via Azure DevOps Pipeline"
-  displayName: 'Merge source into target'
-  
-# Step 6: Handle potential merge conflicts
-- script: |
-    if [ -n "$(git diff --name-only --diff-filter=U)" ]; then
-      echo "Merge conflicts detected. Attempting auto-resolution by taking source branch changes."
-      git diff --name-only --diff-filter=U | xargs git checkout --theirs
-      git add .
-      git commit -m "Resolved merge conflicts by taking source branch changes"
-    fi
-  displayName: 'Handle potential merge conflicts'
-  continueOnError: true
-
-# Step 7: Push changes to the target branch with authentication
-- script: |
-    # For GitHub using PAT
-    git remote set-url origin https://x-access-token:$(GIT_PAT)@github.com/your-username/your-repo.git
-    
-    # Push to the target branch
-    git push origin target-local:$(targetRef)
-  displayName: 'Push changes to target branch'
