@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "mystoragenousdatafactory"
+		},
+		"ls_staging_storage_data_accountKey": {
+			"value": ""
+		},
+		"ls_storage_csv_accountKey": {
+			"value": ""
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://www.hesa.ac.uk"
+		},
+		"ls_source_http_data_properties_typeProperties_url": {
+			"value": "https://www.hesa.ac.uk/data-and-analysis/students/table-46"
+		},
+		"ls_staging_storage_data_properties_typeProperties_url": {
+			"value": "https://mystoragenousdata.dfs.core.windows.net/"
+		},
+		"ls_storage_csv_properties_typeProperties_url": {
+			"value": "https://mystoragenousdata.dfs.core.windows.net/"
+		},
+		"suresh_csv_with_headers_properties_typeProperties_url": {
+			"value": "https://www.hesa.ac.uk/data-and-analysis/students/table-46.csv?__cf_chl_tk=zma5MxOCjBvx80ATQHeMykUWaMdoiGNSzl91pyCcbYw-1743829301-1.0.1.1-Difo5gRTrdHO4wHGSSAUdcq553Sj_1JATuvJePdh3dk"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
