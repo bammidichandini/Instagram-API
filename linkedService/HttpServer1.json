@@ -1,0 +1,23 @@
+{
+	"name": "HttpServer1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://www.hesa.ac.uk",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"user-agent": {
+					"type": "SecureString",
+					"value": "**********"
+				},
+				"cookie": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
+		}
+	}
+}

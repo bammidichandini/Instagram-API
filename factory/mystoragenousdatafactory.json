@@ -1,0 +1,9 @@
+{
+	"name": "mystoragenousdatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a6879b74-0c3a-402c-807f-6a09565b7fb0",
+		"tenantId": "f7a23dee-3122-4588-bd51-531714d48ebc"
+	}
+}
