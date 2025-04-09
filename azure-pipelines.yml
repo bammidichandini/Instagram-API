@@ -1,41 +1,9 @@
 trigger:
-  branches:
-    include:
-    - main  # Change this to your source branch name (e.g., develop)
-  paths:
-    include:
-    - '*'  # Trigger on all file changes
+- main
 
 pool:
-  vmImage: 'ubuntu-latest'  # Using Ubuntu agent
-
-variables:
-  # Repository information
-  repoURL: 'https://github.com/bammidichandini/Instagram-API-Pord'  # CHANGE THIS to your repo URL
-  sourceRef: 'refs/heads/main'  # Change to your source branch
-  targetRef: 'refs/heads/main'  # Change to your target branch (e.g., main)
-  system.debug: true  # Enable debug logging
+  vmImage: 'ubuntu-latest'
 
 steps:
-# Step 1: Checkout the repository
-- checkout: self
-  persistCredentials: true  # Important: Allow Git commands in later steps
-  fetchDepth: 0  # Fetch all history for all branches
-
-# Step 2: Setup Git identity for the commit
-- script: |
-    git config --global user.email "pipeline@example.com"
-    git config --global user.name "Azure Pipeline"
-  displayName: 'Setup Git Identity'
-
-# Step 3: Ensure we're working with the correct remote repository
-- script: |
-    # Verify current remote
-    git remote -v
-    
-    # Update or add the remote if needed
-    git remote set-url origin $(repoURL) || git remote add origin $(repoURL)
-    
-    # Fetch all branches from the correct repository
-    git fetch --all
-  displayName: 'Configure and fetch from repository'
+- script: echo Hello from Azure DevOps
+  displayName: 'Test Job'
